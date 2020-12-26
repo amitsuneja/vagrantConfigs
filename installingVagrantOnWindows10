@@ -65,7 +65,22 @@ D:\Vagrant>vagrant reload
 ==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
 ==> default: flag to force provisioning. Provisioners marked to run always will still run.
 
-D:\Vagrant>
+10. D:\Vagrant> vagrant ssh -> will login you to linux server /
+
+On Unix server 
+------------
+a. reset root user password.
+b. in file /etc/ssh/sshd_config
+PermitRootLogin yes
+PasswordAuthentication yes
+c. systemctl restart sshd
+
+Use putty and login to 127.0.0.1:2222 with root username.
+
+
+
+
+
 
 
 
