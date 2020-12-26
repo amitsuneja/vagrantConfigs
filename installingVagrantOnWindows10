@@ -77,6 +77,19 @@ c. systemctl restart sshd
 
 Use putty and login to 127.0.0.1:2222 with root username.
 
+[root@localhost ~]# ln -s /usr/bin/clear /usr/bin/cls
+[root@localhost ~]# yum install wget
+[root@localhost ~]# yum install unzip
+[root@localhost ~]# yum update -y
+[root@localhost ~]# yum-complete-transaction --cleanup-only
+[root@localhost ~]# wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip
+[root@localhost ~]# unzip terraform_0.12.2_linux_amd64.zip
+[root@localhost ~]# mv terraform /usr/local/bin/
+[root@localhost ~]# ls -ltr /usr/local/bin/terraform
+-rwxrwxr-x. 1 root root 33423360 Jun 12  2019 /usr/local/bin/terraform
+[root@localhost ~]#
+
+
 
 
 
