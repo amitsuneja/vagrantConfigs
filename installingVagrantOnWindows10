@@ -67,8 +67,8 @@ D:\Vagrant>vagrant reload
 
 10. D:\Vagrant> vagrant ssh -> will login you to linux server /
 
-On Unix server 
-------------
+11. On Unix server 
+    ------------
 a. reset root user password.
 b. in file /etc/ssh/sshd_config
 PermitRootLogin yes
@@ -77,6 +77,7 @@ c. systemctl restart sshd
 
 Use putty and login to 127.0.0.1:2222 with root username.
 
+12. 
 [root@localhost ~]# ln -s /usr/bin/clear /usr/bin/cls
 [root@localhost ~]# yum install wget
 [root@localhost ~]# yum install unzip
@@ -89,7 +90,64 @@ Use putty and login to 127.0.0.1:2222 with root username.
 -rwxrwxr-x. 1 root root 33423360 Jun 12  2019 /usr/local/bin/terraform
 [root@localhost ~]#
 
+13.
+[root@localhost ~]# sudo yum install samba samba-client
+Note:-The smbd service provides file sharing and printing services and listens on TCP ports 139 and 445. 
+The nmbd service provides NetBIOS over IP naming services to clients and listens on UDP port 137
 
+14.
+[root@localhost ~]# sudo systemctl start smb.service
+[root@localhost ~]# sudo systemctl start nmb.service
+[root@localhost ~]# sudo systemctl enable smb.service
+Created symlink from /etc/systemd/system/multi-user.target.wants/smb.service to /usr/lib/systemd/system/smb.service.
+[root@localhost ~]# sudo systemctl enable nmb.service
+Created symlink from /etc/systemd/system/multi-user.target.wants/nmb.service to /usr/lib/systemd/system/nmb.service.
+[root@localhost ~]# cls
+[root@localhost ~]# sudo mkdir /samba
+[root@localhost ~]# sudo groupadd sambashare
+[root@localhost ~]# sudo chgrp sambashare /samba
+[root@localhost ~]# sudo useradd -M -d /samba/sambauser -s /usr/sbin/nologin -G sambashare sambauser
+[root@localhost ~]# mkdir /samba/sambauser
+[root@localhost ~]# chown sambauser:sambashare /samba/sambauser
+[root@localhost ~]# chmod 2770 /samba/sambauser
+[root@localhost ~]# smbpasswd -a sambauser
+New SMB password:
+Retype new SMB password:
+Added user sambauser.
+[root@localhost ~]# smbpasswd -e sambauser
+Enabled user sambauser.
+[root@localhost ~]# sudo useradd -M -d /samba/users -s /usr/sbin/nologin -G sambashare sadmin
+[root@localhost ~]#  smbpasswd -a sadmin
+New SMB password:
+Retype new SMB password:
+Added user sadmin.
+[root@localhost ~]# smbpasswd -e sadmin
+Enabled user sadmin.
+[root@localhost ~]# mkdir /samba/users
+[root@localhost ~]# chown sadmin:sambashare /samba/users
+[root@localhost ~]# chmod 2770 /samba/users
+[root@localhost ~]# vi /etc/samba/smb.conf
+
+[users]
+    path = /samba/users
+    browseable = yes
+    read only = no
+    force create mode = 0660
+    force directory mode = 2770
+    valid users = @sambashare @sadmin
+
+[smbuser]
+    path = /samba/smbuser
+    browseable = no
+    read only = no
+    force create mode = 0660
+    force directory mode = 2770
+    valid users = smbuser @sadmin
+
+
+
+[root@localhost ~]# sudo systemctl restart smb.service
+[root@localhost ~]# sudo systemctl restart nmb.service
 
 
 
