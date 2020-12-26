@@ -1,3 +1,27 @@
+Vagrant.configure("2") do |config|
+  config.vm.network "public_network", :bridge => 'Intel(R) Dual Band Wireless-AC 8265', :auto_config => false
+  config.vm.define "vagrant0" do |vagrant0|
+    config.vm.provider "virtualbox" do |v|
+	    #v.gui = true
+		v.memory = 8192
+        v.cpus = 6
+    end
+  config.vm.provision :shell, path: "bootstrap_vagrant.sh", run: 'always'
+	vagrant0.vm.box = "centos/8"
+  end
+  
+  config.vm.define "vagrant1" do |vagrant1|
+  	vagrant1.vm.box = "centos/8"
+  end 
+  config.vm.define "vagrant2" do |vagrant2|
+  	vagrant2.vm.box = "centos/8"
+  end 
+
+end
+
+----------------------------------------------------------------------------------------------------------------------
+
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
